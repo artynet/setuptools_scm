@@ -1,0 +1,22 @@
+Description: cleanly close a file so tests don't break
+Author: Julien Puydt
+Forwarded: https://github.com/pypa/setuptools_scm/issues/403
+
+--- setuptools-scm.orig/src/setuptools_scm/file_finder_git.py
++++ setuptools-scm/src/setuptools_scm/file_finder_git.py
+@@ -4,6 +4,7 @@
+ import logging
+ from .file_finder import scm_find_files
+ from .utils import trace
++from contextlib import closing
+ 
+ log = logging.getLogger(__name__)
+ 
+@@ -50,6 +51,7 @@
+             return _git_interpret_archive(proc.stdout, toplevel)
+         finally:
+             # ensure we avoid resource warnings by cleaning up the process
++            proc.stdout.close()
+             proc.terminate()
+     except Exception:
+         if proc.wait() != 0:
