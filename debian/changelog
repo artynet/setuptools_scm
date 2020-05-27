@@ -1,6 +1,6 @@
-setuptools-scm (4.0.0-1ubuntu1) focal; urgency=medium
+setuptools-scm (4.0.0-1ubuntu2) focal; urgency=medium
 
-  * Still build the Python2 and PyPy packages.
+  * Merge branch 'bugfix/workflow'
 
  -- Matthias Klose <doko@ubuntu.com>  Thu, 30 Jan 2020 12:21:03 +0100
 
