@@ -1,0 +1,15 @@
+Description: fix typo
+Author: Julien Puydt
+Forwarded: https://github.com/pypa/setuptools_scm/issues/463
+
+--- setuptools-scm.orig/src/setuptools_scm/version.py
++++ setuptools-scm/src/setuptools_scm/version.py
+@@ -207,7 +207,7 @@
+         )
+     parsed_version = _parse_tag(tag, preformatted, config)
+     trace("version", tag, "->", parsed_version)
+-    assert parsed_version is not None, "cant parse version %s" % tag
++    assert parsed_version is not None, "can't parse version %s" % tag
+     return ScmVersion(
+         parsed_version, distance, node, dirty, preformatted, branch, config, **kw
+     )

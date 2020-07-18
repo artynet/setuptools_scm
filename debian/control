@@ -1,0 +1,55 @@
+Source: setuptools-scm
+Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Uploaders: Julien Puydt <jpuydt@debian.org>
+Section: python
+Priority: optional
+Standards-Version: 4.3.0
+Homepage: https://github.com/pypa/setuptools_scm
+Build-Depends: debhelper (>= 11),
+               dh-python,
+               git,
+               mercurial,
+               pypy,
+               pypy-py,
+               pypy-pytest,
+               pypy-setuptools,
+               python,
+               python-py,
+               python-pytest,
+               python-setuptools (>= 18.8-1~),
+               python3-all,
+               python3-py,
+               python3-pytest,
+               python3-setuptools (>=12.2),
+               subversion
+Vcs-Git: https://salsa.debian.org/python-team/modules/setuptools-scm.git
+Vcs-Browser: https://salsa.debian.org/python-team/modules/setuptools-scm
+
+Package: python-setuptools-scm
+Architecture: all
+Depends: python-pkg-resources, ${misc:Depends}, ${python:Depends}
+Description: blessed package to manage your versions by scm tags for Python 2
+ setuptools_scm handles managing your Python package versions in scm metadata.
+ It also handles file finders for the suppertes scm's.
+ .
+ This package installs the library for Python 2.
+
+Package: python3-setuptools-scm
+Architecture: all
+Depends: python3-pkg-resources,
+         ${misc:Depends},
+         ${python3:Depends}
+Description: blessed package to manage your versions by scm tags for Python 3
+ setuptools_scm handles managing your Python package versions in scm metadata.
+ It also handles file finders for the suppertes scm's.
+ .
+ This package installs the library for Python 3.
+
+Package: pypy-setuptools-scm
+Architecture: all
+Depends: pypy-pkg-resources, ${misc:Depends}, ${python:Depends}
+Description: blessed package to manage your versions by scm tags for PyPy
+ setuptools_scm handles managing your Python package versions in scm metadata.
+ It also handles file finders for the suppertes scm's.
+ .
+ This package installs the library for PyPy.
