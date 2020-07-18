@@ -1,0 +1,51 @@
+Description: cleanly close a file so tests don't break
+Author: upstream
+Forwarded: upstream commit e143a6cdb1e6a06bb79b1c9e9af4bb4b544cabfc
+
+--- a/src/setuptools_scm/file_finder_git.py
++++ b/src/setuptools_scm/file_finder_git.py
+@@ -4,6 +4,7 @@
+ import logging
+ from .file_finder import scm_find_files
+ from .utils import trace
++from contextlib import closing
+ 
+ log = logging.getLogger(__name__)
+ 
+@@ -28,16 +29,16 @@
+ 
+ 
+ def _git_interpret_archive(fd, toplevel):
+-    tf = tarfile.open(fileobj=fd, mode="r|*")
+-    git_files = set()
+-    git_dirs = {toplevel}
+-    for member in tf.getmembers():
+-        name = os.path.normcase(member.name).replace("/", os.path.sep)
+-        if member.type == tarfile.DIRTYPE:
+-            git_dirs.add(name)
+-        else:
+-            git_files.add(name)
+-    return git_files, git_dirs
++    with tarfile.open(fileobj=fd, mode="r|*") as tf:
++        git_files = set()
++        git_dirs = {toplevel}
++        for member in tf.getmembers():
++            name = os.path.normcase(member.name).replace("/", os.path.sep)
++            if member.type == tarfile.DIRTYPE:
++                git_dirs.add(name)
++            else:
++                git_files.add(name)
++        return git_files, git_dirs
+ 
+ 
+ def _git_ls_files_and_dirs(toplevel):
+@@ -46,7 +47,8 @@
+     cmd = ["git", "archive", "--prefix", toplevel + os.path.sep, "HEAD"]
+     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, cwd=toplevel)
+     try:
+-        return _git_interpret_archive(proc.stdout, toplevel)
++        with closing(proc.stdout):
++            return _git_interpret_archive(proc.stdout, toplevel)
+     except Exception:
+         if proc.wait() != 0:
+             log.exception("listing git files failed - pretending there aren't any")
